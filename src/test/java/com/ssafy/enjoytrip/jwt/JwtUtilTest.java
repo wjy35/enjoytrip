@@ -50,4 +50,22 @@ public class JwtUtilTest {
         assertEquals(jwtUtil.checkToken(fakeToken),false);
     }
 
+    @Test
+    public void testCheckRefreshTokenReturnTrue(){
+        // given
+        String token = jwtUtil.createRefreshToken("id","ssafy");
+
+        // when-then
+        assertEquals(jwtUtil.checkToken(token),true);
+    }
+
+    @Test
+    public void testCheckRefreshTokenReturnFalse(){
+        // given
+        String fakeToken = "GeniusWangJunYoung";
+
+        // when-then
+        assertEquals(jwtUtil.checkToken(fakeToken),false);
+    }
+
 }

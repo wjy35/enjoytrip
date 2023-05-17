@@ -18,19 +18,18 @@ public class JwtUtil {
     private Long EXPIRE_MIN;
 
     public <T> String createAccessToken(String key, T data) {
-        return create(key, data, "access-token",  this.EXPIRE_MIN);
+        return create(key, data, "access-token", 1000 * 60 * this.EXPIRE_MIN);
     }
 
     public <T> String createRefreshToken(String key, T data) {
-        return create(key,data,"refresh-token",this.EXPIRE_MIN);
+        return create(key,data,"refresh-token",1000 * 60 * 5 * this.EXPIRE_MIN);
     }
 
     private <T> String create(String key, T data,String subject, long expireMin){
-
         Claims claims = Jwts.claims()
                 .setSubject(subject)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*expireMin));
+                .setExpiration(new Date(System.currentTimeMillis() + expireMin));
 
         claims.put(key,data);
 
