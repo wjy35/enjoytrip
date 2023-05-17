@@ -52,7 +52,6 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`board` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 73
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -74,8 +73,4 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`comment` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-insert into user(user_id,name,address,password,email) value ('ssafy','ssafy','ssafy','ssafy','ssafy@ssafy');
-insert into community(user_id,subject,content) value ('ssafy','ssafy','ssafy');
-
-select * from community;
 

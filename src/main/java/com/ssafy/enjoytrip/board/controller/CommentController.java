@@ -5,10 +5,11 @@ import com.ssafy.enjoytrip.board.model.dto.CommentResponseDto;
 import com.ssafy.enjoytrip.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import static com.ssafy.enjoytrip.util.ApiUtil.success;
-import static com.ssafy.enjoytrip.util.ApiUtil.ApiResult;
+
+import static com.ssafy.enjoytrip.util.ApiUtil.*;
 
 @RestController
 @Slf4j
@@ -26,8 +27,9 @@ public class CommentController {
     }
 
     @PostMapping("/{boardId}")
-    public  ApiResult<Boolean>  registerComment(@PathVariable int boardId, @RequestBody CommentRequestDto commentRequestDto, String userId )
+    public  ApiResult<?>  registerComment(@PathVariable int boardId, @RequestBody CommentRequestDto commentRequestDto, String userId, BindingResult result)
     {
+        if (result.hasErrors()) return error(result);
         // default
         String userId2= "ssafy";
         commentService.regist(commentRequestDto, userId2, boardId);
