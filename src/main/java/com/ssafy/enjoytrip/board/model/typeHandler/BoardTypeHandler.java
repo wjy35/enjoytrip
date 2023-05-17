@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.board.typehandler;
+package com.ssafy.enjoytrip.board.model.typeHandler;
 
 import com.ssafy.enjoytrip.board.model.dto.BoardType;
 import org.apache.ibatis.type.MappedTypes;

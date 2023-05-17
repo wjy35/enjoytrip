@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.board.model.dto;
 
 import lombok.Data;
-
 @Data
 public class CommentResponseDto {
 
@@ -9,7 +8,6 @@ public class CommentResponseDto {
     private String userId;
     private String content;
     private String currentUpdate;
-
     public CommentResponseDto() {
     }
 

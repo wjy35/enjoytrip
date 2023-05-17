@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.board.service;
 
+import com.ssafy.enjoytrip.board.model.dto.BoardType;
 import com.ssafy.enjoytrip.board.model.dto.Comment;
 import com.ssafy.enjoytrip.board.model.dto.CommentRequestDto;
 import com.ssafy.enjoytrip.board.model.dto.CommentResponseDto;

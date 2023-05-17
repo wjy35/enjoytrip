@@ -1,6 +1,4 @@
 package com.ssafy.enjoytrip.board.controller;
-
-
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.ssafy.enjoytrip.board.model.dto.Board;

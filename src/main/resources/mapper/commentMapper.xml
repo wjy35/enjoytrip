@@ -2,23 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.enjoytrip.board.model.mapper.CommentMapper">
-    <resultMap type="com.ssafy.enjoytrip.board.model.dto.Comment" id="comment">
-        <id column="board_id" property="commentId"/>
-        <result column="user_id" property="userId"/>
-        <result column="current_update" property="currentUpdate"/>
-        <result column="content" property="content"/>
-    </resultMap>
 
-    <select id="selectComment" resultType="comment" resultMap="comment">
+    <select id="selectComment" resultType="comment" >
         select *
         from comment
         where comment_id = #{commentId};
     </select>
 
     <insert id="insertComment" parameterType="comment">
-        <selectKey resultType="int" keyProperty="commentId" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+<!--        <selectKey resultType="int" keyProperty="commentId" order="AFTER">-->
+<!--            SELECT LAST_INSERT_ID()-->
+<!--        </selectKey>-->
         insert into comment (user_id, board_id, content)
         values (#{userId}, #{boardId}, #{content})
     </insert>
@@ -35,7 +29,7 @@
         where comment_id = #{commentId}
     </delete>
 
-    <select id="selectAll" resultMap="comment">
+    <select id="selectAll" resultType="comment">
         select *
         from comment
     </select>

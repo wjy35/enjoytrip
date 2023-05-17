@@ -1,17 +1,12 @@
 package com.ssafy.enjoytrip.board.controller;
 
-import com.ssafy.enjoytrip.board.model.dto.Comment;
 import com.ssafy.enjoytrip.board.model.dto.CommentRequestDto;
 import com.ssafy.enjoytrip.board.model.dto.CommentResponseDto;
 import com.ssafy.enjoytrip.board.service.CommentService;
-import com.ssafy.enjoytrip.util.ApiUtil;
-import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import static com.ssafy.enjoytrip.util.ApiUtil.success;
 import static com.ssafy.enjoytrip.util.ApiUtil.ApiResult;
 

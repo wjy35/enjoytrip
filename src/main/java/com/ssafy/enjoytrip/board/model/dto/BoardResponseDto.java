@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.board.model.dto;
 
 import lombok.*;
-
 @Data
 @ToString
 @Builder
