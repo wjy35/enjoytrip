@@ -102,7 +102,7 @@ public class UserMapperTest {
         //then
         assertEquals(result,1);
         assertEquals(userId,afterUser.getUserId());
-        assertEquals(updateUser.getPassword(),afterUser.getPassword());
+        assertEquals(updateUser.getName(),afterUser.getName());
     }
 
 }
