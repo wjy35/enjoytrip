@@ -9,7 +9,6 @@
         <result column="content" property="content"/>
     </resultMap>
 
-
     <select id="selectComment" resultType="comment" resultMap="comment">
         select *
         from comment
@@ -20,32 +19,24 @@
         <selectKey resultType="int" keyProperty="commentId" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into board (user_id, subject, content, type)
-        values (#{userId}, #{subject}, #{content}, #{boardType})
+        insert into comment (user_id, board_id, content)
+        values (#{userId}, #{boardId}, #{content})
     </insert>
 
-    <update id="updateBoard" parameterType="board">
-        update board
-        set subject = #{subject},
-        content = #{content}
-        where board_id = #{boardId}
+    <update id="updateComment" parameterType="comment">
+        update comment
+        set content = #{content}
+        where comment_id = #{commentId}
     </update>
 
-    <delete id="deleteBoard" parameterType="int">
+    <delete id="deleteComment" parameterType="int">
         delete
-        from board
-        where board_id = #{boardId}
+        from comment
+        where comment_id = #{commentId}
     </delete>
 
-
-    <update id="updateHit" parameterType="int">
-        update board
-        set hit = hit + 1
-        where board_id = #{boardId}
-    </update>
-
-    <select id="selectAll" resultMap="board">
+    <select id="selectAll" resultMap="comment">
         select *
-        from board
+        from comment
     </select>
 </mapper>
