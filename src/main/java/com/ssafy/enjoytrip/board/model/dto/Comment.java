@@ -13,4 +13,10 @@ public class Comment {
     private String userId;
     private String content;
     private String currentUpdate;
+
+    public Comment (CommentRequestDto commentRequestDto, String userId, int boardId) {
+        this.userId = userId;
+        this.content = commentRequestDto.getContent();
+        this.boardId = boardId;
+    }
 }

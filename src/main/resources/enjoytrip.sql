@@ -60,7 +60,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `enjoytrip`.`comment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`comment` (
-  `comment_id` INT GENERATED ALWAYS AS () VIRTUAL,
+  `comment_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(45) NOT NULL,
   `content` VARCHAR(1000) NOT NULL,
   `board_id` INT NOT NULL,
@@ -73,7 +73,6 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`comment` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 insert into user(user_id,name,address,password,email) value ('ssafy','ssafy','ssafy','ssafy','ssafy@ssafy');
 insert into community(user_id,subject,content) value ('ssafy','ssafy','ssafy');
