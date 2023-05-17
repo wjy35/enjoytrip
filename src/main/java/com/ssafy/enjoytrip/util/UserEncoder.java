@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserEncoder {
 
-    public String hashPassword(String raw) {
+    public static String hashPassword(String raw) {
         return BCrypt.hashpw(raw, BCrypt.gensalt());
     }
 
-    public boolean isMatch(String raw, String hashed) {
+    public static boolean isMatch(String raw, String hashed) {
         return BCrypt.checkpw(raw, hashed);
     }
 }
