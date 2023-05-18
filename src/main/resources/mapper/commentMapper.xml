@@ -32,5 +32,6 @@
     <select id="selectAll" resultType="comment">
         select *
         from comment
+        where board_id = #{boardId}
     </select>
 </mapper>

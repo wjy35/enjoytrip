@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.ssafy.enjoytrip.board.model.dto.Board;
 import com.ssafy.enjoytrip.board.model.dto.BoardRequestDto;
 import com.ssafy.enjoytrip.board.model.dto.BoardResponseDto;
+import com.ssafy.enjoytrip.board.model.dto.PageInfoDto;
 import com.ssafy.enjoytrip.board.service.BoardService;
 import com.ssafy.enjoytrip.util.PageNavigationForPageHelper;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +31,13 @@ public class BoardRestController {
     private final BoardService boardService;
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getList(@RequestParam(required = false) Integer page, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> getList(PageInfoDto pageInfoDto, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
-        if (page == null) {
-            page = 1;
+        if (pageInfoDto.getPage() == 0) {
+            pageInfoDto = new PageInfoDto(1,10);
         }
-        PageHelper.startPage(page, 10);
+        log.info("pageInfoDto : {}", pageInfoDto);
+        PageHelper.startPage(pageInfoDto.getPage(), pageInfoDto.getPageSize());
         Page<Board> boards = boardService.getBoardList();
         String path = request.getContextPath() + "/board/list?page";
         PageNavigationForPageHelper helper = new PageNavigationForPageHelper(boards, path);
