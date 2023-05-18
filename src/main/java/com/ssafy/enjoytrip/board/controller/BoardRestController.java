@@ -35,7 +35,7 @@ public class BoardRestController {
         if (page == null) {
             page = 1;
         }
-        PageHelper.startPage(page, 2);
+        PageHelper.startPage(page, 10);
         Page<Board> boards = boardService.getBoardList();
         String path = request.getContextPath() + "/board/list?page";
         PageNavigationForPageHelper helper = new PageNavigationForPageHelper(boards, path);
@@ -64,6 +64,9 @@ public class BoardRestController {
 
     @PutMapping("/{boardId}")
     public ApiResult<Boolean> modifyBoard(@PathVariable int boardId, @RequestBody @Valid BoardRequestDto boardRequestDto) {
+        log.info("boardId : {}", boardId);
+        log.info("boardRequestDto : {}", boardRequestDto);
+        log.info("update board");
         boardService.modify(boardId, boardRequestDto);
         return success(true);
     }

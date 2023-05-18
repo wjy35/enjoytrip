@@ -26,7 +26,7 @@
         values (#{userId}, #{subject}, #{content}, #{boardType})
     </insert>
 
-    <update id="updateBoard" parameterType="board">
+    <update id="updateBoard">
         update board
         set subject = #{subject},
             content = #{content}

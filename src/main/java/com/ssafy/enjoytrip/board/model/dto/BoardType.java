@@ -2,7 +2,7 @@ package com.ssafy.enjoytrip.board.model.dto;
 
 public enum BoardType {
     COMMUNITY("community"), NOTICE("notice");
-    String type;
+    String type ;
 
     BoardType(String type) {
         this.type = type;
