@@ -3,7 +3,7 @@ package com.ssafy.enjoytrip.user.service;
 import com.ssafy.enjoytrip.user.model.dto.User;
 
 public interface UserService {
-    User login(User user);
+    User login(String userId,String password);
 
     int join(User user);
 
