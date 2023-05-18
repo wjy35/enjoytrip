@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -26,6 +28,7 @@ public class JwtRepositoryTest {
 
     @Test
     void testSaveRefreshToken(){
+        System.out.println("Optional.empty() = " + Optional.empty().get());
         //given
         RefreshTokenDto refreshTokenDto = createRefreshTokenDto();
 
@@ -33,7 +36,8 @@ public class JwtRepositoryTest {
         jwtRepository.save(refreshTokenDto);
 
         //then
-        assertNotNull(redisTemplate.opsForValue().get(refreshTokenDto.getRefreshToken()));
+        assertNotNull(redisTemplate.opsForValue().get(refreshTokenDto.getUserId()));
+        assertEquals(refreshTokenDto.getRefreshToken(),redisTemplate.opsForValue().get(refreshTokenDto.getUserId()));
     }
 
     @Test
@@ -43,10 +47,14 @@ public class JwtRepositoryTest {
         jwtRepository.save(refreshTokenDto);
 
         //when
-        RefreshTokenDto findTokenDto = jwtRepository.findByRefreshToken(refreshTokenDto.getRefreshToken()).get();
+        RefreshTokenDto existTokenDto = jwtRepository.findByUserId(refreshTokenDto.getUserId());
+
+        RefreshTokenDto notExistTokenDto  = jwtRepository.findByUserId("");
 
         //then
-        assertEquals(refreshTokenDto.getRefreshToken(),findTokenDto.getRefreshToken());
+        assertEquals(refreshTokenDto.getRefreshToken(),existTokenDto.getRefreshToken());
+        assertEquals(refreshTokenDto.getUserId(),existTokenDto.getUserId());
+        assertEquals(notExistTokenDto,null);
     }
 
 

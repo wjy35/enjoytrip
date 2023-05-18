@@ -26,22 +26,19 @@ public class JwtRepository {
     public void save(final RefreshTokenDto refreshTokenDto) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(
-                refreshTokenDto.getRefreshToken(),
                 refreshTokenDto.getUserId(),
+                refreshTokenDto.getRefreshToken(),
                 TIME_OUT_SECOND,
                 TimeUnit.SECONDS
                 );
     }
 
-    public Optional<RefreshTokenDto> findByRefreshToken(final String refreshToken) {
+    public RefreshTokenDto findByUserId(final String userId) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-        String userId = valueOperations.get(refreshToken);
-
-        if (Objects.isNull(userId)) {
-            return Optional.empty();
+        String refreshToken = valueOperations.get(userId);
+        if(Objects.isNull(refreshToken)){
+            return null;
         }
-
-        return Optional.of(new RefreshTokenDto(
-                refreshToken,userId));
+        return new RefreshTokenDto(refreshToken,userId);
     }
 }

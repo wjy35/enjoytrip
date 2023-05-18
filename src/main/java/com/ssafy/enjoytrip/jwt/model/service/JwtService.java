@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class JwtService {
@@ -35,8 +37,9 @@ public class JwtService {
     }
 
     public boolean canRefresh(String refreshToken, String userId){
-        RefreshTokenDto refreshTokenDto = jwtRepository.findByRefreshToken(refreshToken).get();
-        if(refreshTokenDto.getUserId().equals(userId)) return true;
+        RefreshTokenDto refreshTokenDto = jwtRepository.findByUserId(userId);
+
+        if(!Objects.isNull(refreshTokenDto) && refreshTokenDto.getRefreshToken().equals(refreshToken)) return true;
 
         return false;
     }

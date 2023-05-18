@@ -31,7 +31,7 @@ public class JwtServiceTest {
         String refreshToken = jwtService.generateRefreshToken(userId);
 
         //then
-        assertEquals(userId, redisTemplate.opsForValue().get(refreshToken));
+        assertEquals(refreshToken, redisTemplate.opsForValue().get(userId));
         assertEquals(jwtService.checkValidToken(refreshToken), true);
     }
 
