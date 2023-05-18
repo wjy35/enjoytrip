@@ -1,6 +1,6 @@
 package com.ssafy.enjoytrip.jwt;
 
-import com.ssafy.enjoytrip.jwt.model.dao.RefreshTokenRepository;
+import com.ssafy.enjoytrip.jwt.model.dao.JwtRepository;
 import com.ssafy.enjoytrip.jwt.model.dto.RefreshTokenDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +10,18 @@ import org.springframework.data.redis.core.RedisTemplate;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class RefreshTokenRepositoryTest {
+public class JwtRepositoryTest {
 
     @Autowired
-    RefreshTokenRepository refreshTokenRepository;
+    JwtRepository jwtRepository;
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
     @Test
     void testLoadBean(){
-        System.out.println(refreshTokenRepository);
-        assertNotNull(refreshTokenRepository);
+        System.out.println(jwtRepository);
+        assertNotNull(jwtRepository);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class RefreshTokenRepositoryTest {
         RefreshTokenDto refreshTokenDto = createRefreshTokenDto();
 
         //when
-        refreshTokenRepository.save(refreshTokenDto);
+        jwtRepository.save(refreshTokenDto);
 
         //then
         assertNotNull(redisTemplate.opsForValue().get(refreshTokenDto.getRefreshToken()));
@@ -40,10 +40,10 @@ public class RefreshTokenRepositoryTest {
     void testFind(){
         //given
         RefreshTokenDto refreshTokenDto = createRefreshTokenDto();
-        refreshTokenRepository.save(refreshTokenDto);
+        jwtRepository.save(refreshTokenDto);
 
         //when
-        RefreshTokenDto findTokenDto = refreshTokenRepository.findByRefreshToken(refreshTokenDto.getRefreshToken()).get();
+        RefreshTokenDto findTokenDto = jwtRepository.findByRefreshToken(refreshTokenDto.getRefreshToken()).get();
 
         //then
         assertEquals(refreshTokenDto.getRefreshToken(),findTokenDto.getRefreshToken());

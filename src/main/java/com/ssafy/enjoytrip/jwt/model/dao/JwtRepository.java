@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.jwt.model.dao;
 
 import com.ssafy.enjoytrip.jwt.model.dto.RefreshTokenDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,14 +12,14 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Repository
-public class RefreshTokenRepository {
+public class JwtRepository {
 
     @Value("${refreshtoken.timeout.second}")
     private long TIME_OUT_SECOND;
     private final RedisTemplate<String, String> redisTemplate;
 
     @Autowired
-    public RefreshTokenRepository(RedisTemplate<String, String> redisTemplate) {
+    public JwtRepository(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
