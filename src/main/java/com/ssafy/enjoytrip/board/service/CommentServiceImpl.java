@@ -35,7 +35,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int modify(int commentId, CommentRequestDto commentRequestDto) {
-        boardMapper.selectBoard(commentId).orElseThrow(()->new BoardNotFoundException("해당 boardId에 해당하는 board가 없습니다."));
+        boardMapper.selectBoard(commentRequestDto.getBoardId()).orElseThrow(()->new BoardNotFoundException("해당 boardId에 해당하는 board가 없습니다."));
+        commentRequestDto.setCommentId(commentId);
         return commentMapper.updateComment(commentRequestDto.toEntity());
     }
 

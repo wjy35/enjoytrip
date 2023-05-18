@@ -16,9 +16,7 @@ import static com.ssafy.enjoytrip.util.ApiUtil.*;
 @RequiredArgsConstructor
 @RequestMapping("/comment")
 public class CommentController {
-
     private final CommentService commentService;
-
     @GetMapping("/{boardId}")
     public ApiResult<List<CommentResponseDto>> getCommentList(@PathVariable int boardId)
     {
@@ -39,6 +37,7 @@ public class CommentController {
     @PutMapping("/{commentId}")
     public ApiResult<Boolean> modifyComment(@PathVariable int commentId, @RequestBody CommentRequestDto commentRequestDto)
     {
+
         commentService.modify(commentId, commentRequestDto);
         return success(true);
     }
