@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtInterceptor implements HandlerInterceptor {
 
     private JwtService jwtService;
-    private static final String HEADER_AUTH = "auth-token";
+    private static final String HEADER_AUTH = "access-token";
 
     @Autowired
     public JwtInterceptor(JwtService jwtService) {

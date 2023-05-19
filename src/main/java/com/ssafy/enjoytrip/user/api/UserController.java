@@ -83,6 +83,7 @@ public class UserController {
         Map<String, Object> resultMap = new HashMap<>();
 
         int result = userService.leave(userId);
+        jwtService.deleteToken(userId);
 
         if(result>0){
             resultMap.put("success",true);
@@ -95,7 +96,7 @@ public class UserController {
 
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refreshToken(@RequestBody User user, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?> refreshToken(@RequestBody User user, HttpServletRequest request){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = HttpStatus.ACCEPTED;
 
@@ -111,6 +112,24 @@ public class UserController {
         } else {
             status = HttpStatus.UNAUTHORIZED;
         }
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> logout(@PathVariable String userId){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        HttpStatus status = HttpStatus.ACCEPTED;
+
+        try {
+            jwtService.deleteToken(userId);
+            resultMap.put("success", true);
+            status = HttpStatus.ACCEPTED;
+        } catch (Exception e) {
+            resultMap.put("success", false);
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
         return new ResponseEntity<>(resultMap, status);
     }
 }
