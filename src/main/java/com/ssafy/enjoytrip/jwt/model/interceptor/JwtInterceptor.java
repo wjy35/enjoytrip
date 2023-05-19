@@ -1,5 +1,6 @@
-package com.ssafy.enjoytrip.util;
+package com.ssafy.enjoytrip.jwt.model.interceptor;
 
+import com.ssafy.enjoytrip.jwt.model.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,19 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
 
-    private JwtUtil jwtUtil;
-    private static final String HEADER_AUTH = "auth-token";
+    private JwtService jwtService;
+    private static final String HEADER_AUTH = "access-token";
 
     @Autowired
-    public JwtInterceptor(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
+    public JwtInterceptor(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         final String token = request.getHeader(HEADER_AUTH);
 
-        if(token != null && jwtUtil.checkToken(token)){
+        if(token != null && jwtService.checkValidToken(token)){
             return true;
         }
 

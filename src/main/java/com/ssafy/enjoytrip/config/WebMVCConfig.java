@@ -1,6 +1,6 @@
 package com.ssafy.enjoytrip.config;
 
-import com.ssafy.enjoytrip.util.JwtInterceptor;
+import com.ssafy.enjoytrip.jwt.model.interceptor.JwtInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,8 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/user/*")
-                .excludePathPatterns("/user/login");
+//        registry.addInterceptor(jwtInterceptor)
+//                .addPathPatterns("/user/*")
+//                .excludePathPatterns("/user/login");
     }
 }
