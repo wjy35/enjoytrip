@@ -32,26 +32,45 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
 
+
 -- -----------------------------------------------------
--- Table `enjoytrip`.`community`
+-- Table `enjoytrip`.`board`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`community` (
-  `community_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` VARCHAR(45) NOT NULL,
-  `regist_time` DATETIME default now(),
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`board` (
+  `board_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` VARCHAR(45) NULL DEFAULT NULL,
+  `current_update` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `subject` VARCHAR(100) NOT NULL,
   `content` VARCHAR(3000) NOT NULL,
   `hit` INT NULL DEFAULT '0',
-  PRIMARY KEY (`community_id`, `user_id`),
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `user_id_board`
+  `type` ENUM('notice', 'community') NULL DEFAULT 'notice',
+  PRIMARY KEY (`board_id`),
+  INDEX `user_id` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `board_ibfk_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `enjoytrip`.`user` (`user_id`))
+    REFERENCES `enjoytrip`.`user` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
-insert into user(user_id,name,address,password,email) value ('ssafy','ssafy','ssafy','ssafy','ssafy@ssafy');
-insert into community(user_id,subject,content) value ('ssafy','ssafy','ssafy');
 
-select * from community;
+-- -----------------------------------------------------
+-- Table `enjoytrip`.`comment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`comment` (
+  `comment_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` VARCHAR(45) NOT NULL,
+  `content` VARCHAR(1000) NOT NULL,
+  `board_id` INT NOT NULL,
+  `current_update` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`),
+  INDEX `comment_board_fk_idx` (`board_id` ASC) VISIBLE,
+  CONSTRAINT `comment_board_fk`
+    FOREIGN KEY (`board_id`)
+    REFERENCES `enjoytrip`.`board` (`board_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
