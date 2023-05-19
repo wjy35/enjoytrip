@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 
 public class ApiUtil {
     public static <T> ApiResult<T> success(T response) {
         return new ApiResult<>(true, response, null);
     }
 
+    public static ApiResult<?> error (BindingResult result){
+        return new ApiResult<>(false, null, new ApiError(result.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST));
+    }
     public static ApiResult<?> error(Throwable throwable, HttpStatus status) {
         return new ApiResult<>(false, null, new ApiError(throwable, status));
     }
