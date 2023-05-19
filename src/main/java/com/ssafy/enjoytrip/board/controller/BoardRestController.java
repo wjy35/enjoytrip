@@ -12,11 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.ssafy.enjoytrip.util.ApiUtil.ApiResult;
@@ -102,4 +104,10 @@ public class BoardRestController {
     }
 
 
+    @PostMapping("/{boardId}/fileUpload")
+    public ApiResult<Boolean> fileUpload (@Valid List<MultipartFile> files) {
+
+        log.info("fileUpload");
+        return success(true);
+    }
 }

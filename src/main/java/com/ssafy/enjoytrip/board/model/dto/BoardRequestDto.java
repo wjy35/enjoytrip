@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,6 +17,11 @@ public class BoardRequestDto {
     private String content;
     private String userId;
     private BoardType boardType;
+
+    //첨부 파일
+    private UploadFile attachFile;
+    // 첨부이미지
+    private List<UploadFile> imageFiles;
 
     public void setBoardId(int boardId) {
         this.boardId = boardId;
