@@ -27,6 +27,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        throw new RuntimeException();
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        return false;
     }
 }
