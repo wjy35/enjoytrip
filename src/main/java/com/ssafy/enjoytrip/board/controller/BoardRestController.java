@@ -48,6 +48,7 @@ public class BoardRestController {
 
     @GetMapping("/list/{currentPage}")
     public ResponseEntity<Map<String, Object>> getListByPage(@PathVariable int currentPage, @RequestParam(required = false) Integer pageSize, HttpServletRequest request) {
+        log.info("page By currentPage : {}", currentPage);
         Map<String, Object> map = new HashMap<>();
         if (pageSize == null) {
             pageSize = 10;
