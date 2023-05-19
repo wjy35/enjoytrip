@@ -32,13 +32,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public int modify(User user) {
-        return 0;
+        return userMapper.updateByUser(user);
     }
 
     @Override
+    @Transactional
     public int leave(String userId) {
-        return 0;
+        return userMapper.deleteByUserId(userId);
     }
 }
 
