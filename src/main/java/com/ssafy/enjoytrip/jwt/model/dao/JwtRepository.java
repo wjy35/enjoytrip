@@ -41,4 +41,10 @@ public class JwtRepository {
         }
         return new RefreshTokenDto(refreshToken,userId);
     }
+
+    public void delete(final String userId){
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+
+        valueOperations.getAndDelete(userId);
+    }
 }

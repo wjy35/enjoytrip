@@ -69,4 +69,8 @@ public class JwtService {
         }
         return true;
     }
+
+    public void deleteToken(final String userId){
+        jwtRepository.delete(userId);
+    }
 }

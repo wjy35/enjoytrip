@@ -57,6 +57,19 @@ public class JwtRepositoryTest {
         assertEquals(notExistTokenDto,null);
     }
 
+    @Test
+    void testDelete(){
+        //given
+        RefreshTokenDto refreshTokenDto = createRefreshTokenDto();
+        jwtRepository.save(refreshTokenDto);
+
+        //when
+        jwtRepository.delete(refreshTokenDto.getUserId());
+
+        //then
+        assertEquals(redisTemplate.opsForValue().get(refreshTokenDto.getUserId()),null);
+    }
+
 
     RefreshTokenDto createRefreshTokenDto(){
         String refreshToken = "TestToken";
