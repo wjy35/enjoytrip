@@ -15,7 +15,7 @@ import java.util.Arrays;
 @Slf4j
 public class UserAop {
 
-    @Before("execution(* com.ssafy.enjoytrip.user.service.*.join*(..))")
+    @Before("execution(* com.ssafy.enjoytrip.user.service.*.*(com.ssafy.enjoytrip.user.model.dto.User))")
     public void encodePassword(JoinPoint joinPoint){
         Object[] args = joinPoint.getArgs();
         User user = (User)args[0];
