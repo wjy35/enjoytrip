@@ -42,5 +42,10 @@ public class UserServiceImpl implements UserService {
     public int leave(String userId) {
         return userMapper.deleteByUserId(userId);
     }
+
+    @Override
+    public User getInformation(String userId) {
+        return userMapper.selectByUserId(userId);
+    }
 }
 
