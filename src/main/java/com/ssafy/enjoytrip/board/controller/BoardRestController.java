@@ -1,11 +1,12 @@
 package com.ssafy.enjoytrip.board.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.ssafy.enjoytrip.board.model.dto.Board;
-import com.ssafy.enjoytrip.board.model.dto.BoardRequestDto;
-import com.ssafy.enjoytrip.board.model.dto.BoardResponseDto;
-import com.ssafy.enjoytrip.board.model.dto.PageInfoDto;
+import com.ssafy.enjoytrip.board.model.dto.*;
 import com.ssafy.enjoytrip.board.service.BoardService;
+import com.ssafy.enjoytrip.board.service.FileService;
+import com.ssafy.enjoytrip.util.FileUtil;
 import com.ssafy.enjoytrip.util.PageNavigationForPageHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +33,13 @@ import static com.ssafy.enjoytrip.util.ApiUtil.success;
 public class BoardRestController {
 
     private final BoardService boardService;
+    private final FileService fileService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getList(PageInfoDto pageInfoDto, HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         if (pageInfoDto.getPage() == 0) {
-            pageInfoDto = new PageInfoDto(1,10);
+            pageInfoDto = new PageInfoDto(1, 10);
         }
         log.info("pageInfoDto : {}", pageInfoDto);
         PageHelper.startPage(pageInfoDto.getPage(), pageInfoDto.getPageSize());
@@ -68,19 +70,33 @@ public class BoardRestController {
     public ApiResult<BoardResponseDto> getBoard(@PathVariable("boardId") int boardId) {
 
         System.out.println("getBoard");
-        log.info("boardId : {}",boardId );
+        log.info("boardId : {}", boardId);
+
         return success(new BoardResponseDto(boardService.detail(boardId)));
     }
 
-    @PostMapping
-    public ApiResult<Boolean> registerBoard(@RequestBody @Valid BoardRequestDto boardRequestDto, HttpSession session) {
+    public ApiResult<Boolean> registerBoard(@RequestParam @Valid BoardRequestDto boardRequestDto, List<MultipartFile> files) throws IOException {
         log.info("boardRequestDto : {}", boardRequestDto);
-       // User userInfo = Optional.of((User) session.getAttribute("userInfo")).orElseThrow(() -> new UserNotFoundException("로그인이 필요합니다."));
-
-       // boardService.regist(boardRequestDto, userInfo.getUserId());
         boardService.regist(boardRequestDto, boardRequestDto.getUserId());
+        log.info(boardRequestDto.getBoardId() + "번 게시글에 파일 업로드");
+        List<FileInfo> list = FileUtil.storeFiles(files);
+        fileService.insertFile(boardRequestDto.getBoardId(), list);
         return success(true);
     }
+
+    @PostMapping("/test")
+    public ApiResult<Boolean> registerBoard2(@RequestParam @Valid String json, List<MultipartFile> files) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        log.info("json : {}", json);
+        BoardRequestDto boardRequestDto = objectMapper.readValue(json, BoardRequestDto.class);
+        log.info("boardRequestDto : {}", boardRequestDto);
+        int pk = boardService.regist(boardRequestDto, boardRequestDto.getUserId());
+        log.info(pk + "번 게시글에 파일 업로드");
+        List<FileInfo> list = FileUtil.storeFiles(files);
+        fileService.insertFile(pk, list);
+        return success(true);
+    }
+
 
     @PutMapping("/{boardId}")
     public ApiResult<Boolean> modifyBoard(@PathVariable int boardId, @RequestBody @Valid BoardRequestDto boardRequestDto) {
@@ -93,7 +109,6 @@ public class BoardRestController {
 
     @DeleteMapping("/{boardId}")
     public ApiResult<Boolean> deleteBoard(@PathVariable int boardId) {
-        Map<String, Object> map = new HashMap<>();
         boardService.delete(boardId);
         return success(true);
     }
@@ -104,11 +119,20 @@ public class BoardRestController {
         return success(true);
     }
 
+    @PostMapping("/fileUploadTest")
+    public void fileUploadTest(MultipartFile file) throws IOException {
+        log.info("file : {}", file);
+        FileInfo fileInfo = FileUtil.storeFile(file);
+        log.info("uploadFile : {}", fileInfo);
+    }
 
-    @PostMapping("/{boardId}/fileUpload")
-    public ApiResult<Boolean> fileUpload (@Valid List<MultipartFile> files) {
 
-        log.info("fileUpload");
-        return success(true);
+    @PostMapping(value = "/multiFileUploadTest", consumes = {"multipart/form-data"})
+    public ResponseEntity<?> fileUploadTest(List<MultipartFile> files) throws IOException {
+        log.info("files : {}", files);
+        List<FileInfo> list = FileUtil.storeFiles(files);
+        log.info("uploadFile : {}", list);
+        return ResponseEntity.ok(list);
+
     }
 }

@@ -2,6 +2,8 @@ package com.ssafy.enjoytrip.board.model.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class Board {
     private int hit;
     private String currentUpdate;
     private  BoardType boardType;
+    private List<FileInfo> imageFiles;
     public Board(BoardRequestDto boardRequestDto, String userId) {
         this.userId = userId;
         this.subject = boardRequestDto.getSubject();
