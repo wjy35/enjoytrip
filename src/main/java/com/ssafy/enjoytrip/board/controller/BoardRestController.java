@@ -8,6 +8,7 @@ import com.ssafy.enjoytrip.board.service.BoardService;
 import com.ssafy.enjoytrip.board.service.FileService;
 import com.ssafy.enjoytrip.util.FileUtil;
 import com.ssafy.enjoytrip.util.PageNavigationForPageHelper;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -133,6 +134,11 @@ public class BoardRestController {
         List<FileInfo> list = FileUtil.storeFiles(files);
         log.info("uploadFile : {}", list);
         return ResponseEntity.ok(list);
+    }
 
+    @GetMapping("/file/{boardId}")
+    public ResponseEntity<List<FileInfo>> getFileList(@PathVariable int boardId) {
+        List<FileInfo> list = fileService.selectFile(boardId);
+        return ResponseEntity.ok(list);
     }
 }

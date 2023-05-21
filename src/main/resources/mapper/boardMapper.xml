@@ -55,4 +55,10 @@
         select *
         from board
     </select>
+
+    <select id="selectFile" resultType="fileInfo">
+        select *
+        from file_info
+        where board_id = #{boardId}
+    </select>
 </mapper>

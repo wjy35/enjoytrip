@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FileService {
     int insertFile (int boardId, List<FileInfo> imageFiles);
+    List<FileInfo> selectFile(int boardId);
 }

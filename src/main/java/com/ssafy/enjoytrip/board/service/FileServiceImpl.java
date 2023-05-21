@@ -16,4 +16,10 @@ public class FileServiceImpl implements FileService {
         imageFiles.forEach(fileInfo -> fileInfo.setBoardId(boardId));
         return boardMapper.insertFile(boardId, imageFiles);
     }
+
+    @Override
+    public List<FileInfo> selectFile(int boardId) {
+        return boardMapper.selectFile(boardId);
+    }
+
 }

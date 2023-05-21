@@ -19,4 +19,6 @@ public interface BoardMapper {
     int updateHit(int boardId);
     Page<Board> selectAll();
     int insertFile(int boardId, List<FileInfo> imageFiles);
+
+    List<FileInfo> selectFile(int boardId);
 }
