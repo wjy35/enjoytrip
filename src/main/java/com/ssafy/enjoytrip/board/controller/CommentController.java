@@ -14,6 +14,7 @@ import static com.ssafy.enjoytrip.util.ApiUtil.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://127.0.0.1:8080","http://192.168.0.1:8080","http://localhost:8080"})
 @RequestMapping("/comment")
 public class CommentController {
     private final CommentService commentService;
@@ -25,12 +26,10 @@ public class CommentController {
     }
 
     @PostMapping("/{boardId}")
-    public  ApiResult<?>  registerComment(@PathVariable int boardId, @RequestBody CommentRequestDto commentRequestDto, String userId, BindingResult result)
+    public  ApiResult<?> registerComment(@PathVariable int boardId, @RequestBody CommentRequestDto commentRequestDto, BindingResult result)
     {
         if (result.hasErrors()) return error(result);
-        // default
-        String userId2= "ssafy";
-        commentService.regist(commentRequestDto, userId2, boardId);
+        commentService.regist(commentRequestDto, commentRequestDto.getUserId(), boardId);
         return success(true);
     }
 

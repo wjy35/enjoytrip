@@ -27,6 +27,7 @@ import static com.ssafy.enjoytrip.util.ApiUtil.success;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = {"http://127.0.0.1:8080","http://192.168.0.1:8080","http://localhost:8080"})
 @RequestMapping("/board")
 public class BoardRestController {
 
@@ -77,7 +78,7 @@ public class BoardRestController {
        // User userInfo = Optional.of((User) session.getAttribute("userInfo")).orElseThrow(() -> new UserNotFoundException("로그인이 필요합니다."));
 
        // boardService.regist(boardRequestDto, userInfo.getUserId());
-        boardService.regist(boardRequestDto, "ssafy");
+        boardService.regist(boardRequestDto, boardRequestDto.getUserId());
         return success(true);
     }
 
