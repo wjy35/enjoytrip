@@ -29,6 +29,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
+
         try {
             User loginUser = userService.login(requestUser.getUserId(),requestUser.getPassword());
             if (loginUser != null) {
@@ -51,7 +52,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> join(@RequestBody User requestUser){
-        System.out.println(requestUser);
         Map<String, Object> resultMap = new HashMap<>();
 
         int result = userService.join(requestUser);
@@ -103,13 +103,16 @@ public class UserController {
         HttpStatus status = HttpStatus.ACCEPTED;
 
         String token = request.getHeader("refresh-token");
+
         if (jwtService.checkValidToken(token)) {
             if (jwtService.canRefresh(token,user.getUserId())) {
+
                 String accessToken = jwtService.generateAccessToken(user.getUserId());
 
                 resultMap.put("access-token", accessToken);
-
                 status = HttpStatus.ACCEPTED;
+            }else{
+                status = HttpStatus.UNAUTHORIZED;
             }
         } else {
             status = HttpStatus.UNAUTHORIZED;
@@ -118,7 +121,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> logout(@PathVariable String userId){
+    public ResponseEntity<?> logout(@PathVariable String userId,HttpServletRequest request){
         Map<String, Object> resultMap = new HashMap<>();
 
         HttpStatus status = HttpStatus.ACCEPTED;

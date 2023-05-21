@@ -20,18 +20,16 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(jwtInterceptor)
-//                .addPathPatterns("/user/*")
-//                .excludePathPatterns("/user/login");
+        // ToDo: 인증 서비스 URL 추가
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/user/info/*");
     }
     
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         log.info("CORS Setting");
-        registry.addMapping("/**").allowedOrigins("*")
-                .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
-                        HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
-                        HttpMethod.PATCH.name())
+        registry.addMapping("/**")
+                .allowedOrigins("*")
                 .maxAge(1800);
     }
 }
