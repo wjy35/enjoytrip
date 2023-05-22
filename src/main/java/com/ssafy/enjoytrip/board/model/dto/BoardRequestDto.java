@@ -27,6 +27,7 @@ public class BoardRequestDto {
     public void setBoardId(int boardId) {
         this.boardId = boardId;
     }
+
     public void setImages(List<FileInfo> imageFiles) {
         this.imageFiles = imageFiles;
     }
@@ -38,12 +39,14 @@ public class BoardRequestDto {
         this.userId = userId;
         this.boardType = boardType;
     }
-    public BoardRequestDto (String subject, String content, String userId, BoardType boardType) {
+
+    public BoardRequestDto(String subject, String content, String userId, BoardType boardType) {
         this.subject = subject;
         this.content = content;
         this.boardType = boardType;
         this.userId = userId;
     }
+
     public Board toEntity() {
         return Board.builder()
                 .boardId(boardId)

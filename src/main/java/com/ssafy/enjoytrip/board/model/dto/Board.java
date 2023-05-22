@@ -16,8 +16,9 @@ public class Board {
     private String content;
     private int hit;
     private String currentUpdate;
-    private  BoardType boardType;
+    private BoardType boardType;
     private List<FileInfo> imageFiles;
+
     public Board(BoardRequestDto boardRequestDto, String userId) {
         this.userId = userId;
         this.subject = boardRequestDto.getSubject();

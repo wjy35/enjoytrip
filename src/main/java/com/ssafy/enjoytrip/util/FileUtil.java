@@ -12,32 +12,28 @@ import java.util.UUID;
 
 @Slf4j
 public class FileUtil {
-    private static final String rootPath = System.getProperty("user.dir");
-    private static final String uploadPath = rootPath + "/upload/";
     // 확장자 추출
     public static String getExt(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-    // 파일 하나 들어왔을 떄
-    public static FileInfo storeFile(MultipartFile multipartFile) throws IOException {
-        if (multipartFile.isEmpty()) return null;
-        String originalFilename = multipartFile.getOriginalFilename();
-        String storeFilename = UUID.randomUUID() + "." + getExt(originalFilename);
-        log.info("storeFilename : {}", storeFilename , originalFilename);
-        multipartFile.transferTo(new File(uploadPath + storeFilename));
-        return new FileInfo(originalFilename, storeFilename, uploadPath + storeFilename);
+    public static String findContentType(String contentType) {
+        String[] mediaContentType = contentType.split("/");
+        if (mediaContentType.length <= 0)
+            throw new RuntimeException("파일 형식이 잘못되었습니다.");
+        if (!(mediaContentType[0].toUpperCase().equals("IMAGE") || mediaContentType[0].toUpperCase().equals("VIDEO")))
+            throw new RuntimeException("파일 형식이 잘못되었습니다.");
+        return mediaContentType[0].toUpperCase();
     }
 
-    // 파일 여러개 들어왔을 떄
-    public static  List<FileInfo> storeFiles(List<MultipartFile> files) throws IOException {
+    public static String findFolder(String filename, String userName, String contentType) {
+        String folder = "";
+        folder += contentType + "/" + userName + "/" + contentType + "/" + filename;
+        log.info("folder Name : " + folder);
+        return folder;
+    }
 
-        log.info("storeFiles : {}", files);
-        List<FileInfo> fileInfos = new ArrayList<>();
-        for (MultipartFile multipartFile : files) {
-            if (multipartFile.isEmpty()) continue;
-            fileInfos.add(storeFile(multipartFile));
-        }
-        return fileInfos;
+    public static String findExt(String fileName) {
+        return fileName.split("\\.")[1];
     }
 }
