@@ -20,18 +20,9 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(jwtInterceptor)
-//                .addPathPatterns("/user/*")
-//                .excludePathPatterns("/user/login");
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/user/*")
+                .excludePathPatterns("/user/login");
     }
-    
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        log.info("CORS Setting");
-        registry.addMapping("/**").allowedOrigins("*")
-                .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
-                        HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
-                        HttpMethod.PATCH.name())
-                .maxAge(1800);
-    }
+
 }
