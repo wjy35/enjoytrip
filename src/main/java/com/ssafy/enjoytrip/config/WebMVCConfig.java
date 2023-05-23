@@ -2,7 +2,6 @@ package com.ssafy.enjoytrip.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import com.ssafy.enjoytrip.jwt.model.interceptor.JwtInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -32,4 +31,5 @@ public class WebMVCConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .maxAge(1800);
     }
+
 }
