@@ -25,6 +25,7 @@ public class JwtService {
         this.jwtRepository = jwtRepository;
     }
 
+    // ToDo: RefreshToken, AccessToken 유지 시간 설정
     public String generateRefreshToken(String userId){
         String refreshToken = generateToken("userId",userId,"refresh-token",1000 * 10 * 5 * EXPIRE_MIN);
         jwtRepository.save(new RefreshTokenDto(refreshToken,userId));
@@ -33,7 +34,7 @@ public class JwtService {
     }
 
     public String generateAccessToken(String userId){
-        return generateToken("userId",userId,"access-token",1000 * 10 * EXPIRE_MIN);
+        return generateToken("userId",userId,"access-token", 1000 * 10 * 1 *EXPIRE_MIN);
     }
 
     public boolean canRefresh(String refreshToken, String userId){
