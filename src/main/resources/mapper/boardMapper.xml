@@ -18,10 +18,15 @@
         where board_id = #{boardId};
     </select>
 
-    <insert id="insertBoard" parameterType="board">
-        <selectKey resultType="int" keyProperty="boardId" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+    <insert id="insertFile" parameterType="List">
+        INSERT INTO file_info (board_id, file_url)
+        VALUES
+        <foreach collection="imageFiles" item="item" separator=",">
+            (#{item.boardId}, #{item.fileUrl})
+        </foreach>
+    </insert>
+    <insert id="insertBoard" parameterType="board" useGeneratedKeys="true" keyProperty="boardId">
+
         insert into board (user_id, subject, content, type)
         values (#{userId}, #{subject}, #{content}, #{boardType})
     </insert>
@@ -49,5 +54,17 @@
     <select id="selectAll" resultMap="board">
         select *
         from board
+    </select>
+
+
+    <resultMap type="com.ssafy.enjoytrip.board.model.dto.FileInfo" id="fileInfo">
+        <id column="file_info_id" property="fileInfoId"/>
+        <result column="file_url" property="fileUrl"/>
+        <result column="board_id" property="boardId"/>
+    </resultMap>
+    <select id="selectFile" resultMap="fileInfo">
+        select *
+        from file_info
+        where board_id = #{boardId}
     </select>
 </mapper>

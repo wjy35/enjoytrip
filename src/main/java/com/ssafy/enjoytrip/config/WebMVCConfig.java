@@ -31,5 +31,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .maxAge(1800);
+
     }
+
 }

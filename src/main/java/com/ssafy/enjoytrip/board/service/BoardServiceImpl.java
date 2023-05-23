@@ -27,13 +27,14 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public int regist(BoardRequestDto boardRequestDto, String userId) {
-        return boardMapper.insertBoard(new Board(boardRequestDto, userId));
+        Board board = new Board(boardRequestDto, userId);
+        boardMapper.insertBoard(board);
+        return board.getBoardId();
     }
 
     @Override
     @Transactional
-    public int modify(int boardId, BoardRequestDto boardRequestDto)
-    {
+    public int modify(int boardId, BoardRequestDto boardRequestDto) {
         boardRequestDto.setBoardId(boardId);
         return boardMapper.updateBoard(boardRequestDto.toEntity());
     }
