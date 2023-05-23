@@ -1,3 +1,4 @@
+drop database enjoytrip;
 create database enjoytrip;
 use enjoytrip;
 
@@ -114,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_article` (
                                                              `hot_place_article_id` INT NOT NULL AUTO_INCREMENT,
                                                              `hot_place_id` VARCHAR(45) NULL,
   `content` VARCHAR(2000) NULL,
-  `createAt` VARCHAR(1000) NULL,
+  `createAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` VARCHAR(45) NULL,
   `image_url` VARCHAR(1000) NULL,
   PRIMARY KEY (`hot_place_article_id`),
