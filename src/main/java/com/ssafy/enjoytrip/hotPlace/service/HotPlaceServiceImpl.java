@@ -17,7 +17,7 @@ public class HotPlaceServiceImpl implements HotPlaceService{
 
     @Override
     public HotPlace selectHotPlaceById(String hotPlaceId) {
-        return hotPlaceMapper.selectHotPlaceById(hotPlaceId);
+        return hotPlaceMapper.selectHotPlaceByHotPlaceId(hotPlaceId);
     }
 
     @Override
@@ -41,6 +41,13 @@ public class HotPlaceServiceImpl implements HotPlaceService{
     }
 
     @Override
+    public List<HotPlaceArticle> selectHotPlaceArticleById(String hotPlaceId) {
+        return hotPlaceMapper.selectHotPlaceArticleById(hotPlaceId);
+    }
+
+
+
+    @Override
     public int updateTag(String hotPlaceId, List<TagType> tagType) {
         for (int i = 0 ; i< tagType.size(); i++) {
             hotPlaceMapper.updateHotPlaceTag(hotPlaceId, tagType.get(i).getId());
@@ -59,6 +66,7 @@ public class HotPlaceServiceImpl implements HotPlaceService{
     public int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle) {
         return hotPlaceMapper.insertHotPlaceArticle(hotPlaceArticle);
     }
+
 
 
 }

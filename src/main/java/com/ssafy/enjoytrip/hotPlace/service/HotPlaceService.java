@@ -9,9 +9,11 @@ import java.util.List;
 
 public interface HotPlaceService {
 
-    // select
+    // select implmentation
     public HotPlace selectHotPlaceById(String hotPlaceId) ;
     public List<HotPlace> selectAllHotPlace();
+    public List<HotPlaceArticle> selectHotPlaceArticleById(String hotPlaceId);
+
     public List<HotPlaceArticle> selectAllHotPlaceArticle(String hotPlaceId);
     public HotPlaceArticle selectHotPlaceArticleByUserIdAndHotPlaceId(String userId, String hotPlaceId);
     public List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);

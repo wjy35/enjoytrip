@@ -13,6 +13,12 @@ public interface HotPlaceMapper {
     List<HotPlaceArticle> selectAllHotPlaceArticle(String hotPlaceId);
     HotPlaceArticle selectHotPlaceArticleByUserIdAndHotPlaceId(String userId, String hotPlaceId);
     List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
+    List<HotPlaceArticle> selectHotPlaceArticleById(String hotPlaceId);
+
+
+
+    HotPlace selectHotPlaceByHotPlaceId(String hotPlaceId);
+
 
     // Update
     int updateHotPlace(HotPlace hotPlace);
@@ -21,5 +27,6 @@ public interface HotPlaceMapper {
     int insertHotPlace(HotPlace hotPlace);
     int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
     int updateHotPlaceTag(String hotPlaceId, int tagId);
-    HotPlace selectHotPlaceById(String hotPlaceId);
+
+
 }

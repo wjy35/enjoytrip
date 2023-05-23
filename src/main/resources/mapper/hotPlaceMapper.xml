@@ -58,6 +58,12 @@
         where hot_place_id = #{hotPlaceId}
     </select>
 
+    <select id="selectHotPlaceArticleById" resultMap="hotPlaceArticle">
+        select *
+        from hot_place_article
+        where hot_place_id = #{hotPlaceId}
+    </select>
+
 
     <insert id="insertHotPlace" parameterType="hotPlace" >
         insert into hot_place (hot_place_id, hot_place_name, road_address_name, address_name, place_url, x, y)
@@ -68,4 +74,5 @@
         insert into hot_place_article (user_id, hot_place_id, content, image_url)
         values (#{userId}, #{hotPlaceId}, #{content}, #{imageUrl})
     </insert>
+
 </mapper>
