@@ -8,20 +8,20 @@ import java.util.List;
 
 @Mapper
 public interface HotPlaceMapper {
-    // select
     List<HotPlace> selectAllHotPlace();
     List<HotPlaceArticle> selectAllHotPlaceArticle(String hotPlaceId);
     HotPlace selectHotPlaceByHotPlaceId(String hotPlaceId);
     HotPlaceArticle selectHotPlaceArticleByArticleId(int articleId);
-    /////
+    int insertHotPlace(HotPlace hotPlace);
+    int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
+    int updateHotPlaceArticleImage(int hotPlaceArticleId, String imageUrl);
 
     List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
 
     // Update
     int updateHotPlace(HotPlace hotPlace);
     int updateHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
-    // Insert
-    int insertHotPlace(HotPlace hotPlace);
-    int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
+
+
     int updateHotPlaceTag(String hotPlaceId, int tagId);
 }

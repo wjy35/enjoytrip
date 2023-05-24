@@ -53,6 +53,11 @@
         where hot_place_article_id = #{hotPlaceArticleId}
     </select>
 
+    <update id="updateHotPlaceArticleImage" >
+        update hot_place_article
+        set image_url = #{imageUrl}
+        where hot_place_article_id = #{hotPlaceArticleId}
+    </update>
 
 
     <select id="selectAllHotPlaceTag" resultMap="hotPlaceTag">

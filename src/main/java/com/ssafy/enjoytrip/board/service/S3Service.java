@@ -39,6 +39,6 @@ public class S3Service {
                 new PutObjectRequest(bucket, folder+ fileName, file.getInputStream(),
                         metadata).withCannedAcl(
                         CannedAccessControlList.PublicRead));
-        return amazonS3.getUrl(bucket, fileName).toString();
+        return amazonS3.getUrl(bucket, folder+fileName).toString();
     }
 }

@@ -17,6 +17,7 @@ public interface HotPlaceService {
 
     public HotPlaceArticle selectHotPlaceArticleByArticleId(int hotPlaceId);
 
+    int updateHotPlaceArticleImage(int hotPlaceArticleId, String imageUrl);
 
 
     /////

@@ -36,6 +36,11 @@ public class HotPlaceServiceImpl implements HotPlaceService {
         return hotPlaceMapper.selectHotPlaceArticleByArticleId(hotPlaceArticleId);
     }
 
+    @Override
+    public int updateHotPlaceArticleImage(int hotPlaceArticleId, String imageUrl) {
+        return hotPlaceMapper.updateHotPlaceArticleImage(hotPlaceArticleId, imageUrl);
+    }
+
 
     //////
     @Override

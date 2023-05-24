@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.hotPlace.controller;
 
 import com.ssafy.enjoytrip.board.service.FileService;
+import com.ssafy.enjoytrip.board.service.S3Service;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlace;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceArticle;
 import com.ssafy.enjoytrip.hotPlace.service.HotPlaceService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -24,7 +26,7 @@ import java.util.List;
 @RequestMapping("/hotplace")
 public class HotPlaceController {
     private final HotPlaceService hotPlaceService;
-    private final FileService fileService;
+    private final S3Service s3Service;
 
     @GetMapping
     public ResponseEntity<List<HotPlace>> getHotPlaceList() {
@@ -53,8 +55,13 @@ public class HotPlaceController {
         return ResponseEntity.ok().body(hotPlaceArticle);
     }
 
-
-
+    @PostMapping("/article/{articleId}/flleUpload")
+    public ApiResult<Boolean> uploadImagetoArticle(@PathVariable int articleId,@ModelAttribute List<MultipartFile> files) throws IOException {
+        log.info("uploadImagetoArticle Controller",articleId, files);
+        String url = s3Service.uploadMediaToS3( files.get(0), "hotplace/");
+        hotPlaceService.updateHotPlaceArticleImage(articleId, url);
+        return success(true);
+    }
 
 
     ///////////
@@ -93,13 +100,6 @@ public class HotPlaceController {
     public ApiResult<Integer> addHotPlaceArticle(@RequestBody HotPlaceArticle hotPlaceArticle) {
         int pk = hotPlaceService.insertHotPlaceArticle(hotPlaceArticle);
         return success(pk);
-    }
-
-    @PostMapping("/article/{articleId}/flleUpload")
-    public ApiResult<Boolean> uploadImagetoArticle(@PathVariable int articleId,@ModelAttribute List<MultipartFile> files) {
-        log.info("uploadImagetoArticle Controller",articleId, files);
-        fileService.insertFile(articleId,files, "hotplace/");
-        return success(true);
     }
 
 

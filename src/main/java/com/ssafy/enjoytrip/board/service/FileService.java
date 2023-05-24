@@ -10,3 +10,5 @@ public interface FileService {
     int insertFile (int boardId, List<MultipartFile> imageFiles,String folder);
     List<FileInfo> selectFile(int boardId);
 }
+
+
