@@ -5,6 +5,7 @@ import com.ssafy.enjoytrip.board.service.S3Service;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlace;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceArticle;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceTag;
+import com.ssafy.enjoytrip.hotPlace.model.dto.TagType;
 import com.ssafy.enjoytrip.hotPlace.service.HotPlaceService;
 
 import static com.ssafy.enjoytrip.util.ApiUtil.ApiResult;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,6 +37,13 @@ public class HotPlaceController {
         List<HotPlace> hotPlaces = hotPlaceService.selectAllHotPlace();
         return success(hotPlaces);
     }
+
+    @GetMapping("/search")
+    public ApiResult<List<HotPlace>> getHotPlaceList(@RequestParam String keyword) {
+        List<HotPlace> hotPlaces = hotPlaceService.selectHotPlaceByKeyword(keyword);
+        return success(hotPlaces);
+    }
+
     @GetMapping("/articleAll/{hotPlaceId}")
     public ApiResult<List<HotPlaceArticle>> getHotPlaceArticleList(@PathVariable String hotPlaceId) {
         List<HotPlaceArticle> hotPlaceArticles = hotPlaceService.selectAllHotPlaceArticle(hotPlaceId);
@@ -75,6 +84,12 @@ public class HotPlaceController {
     public ApiResult<Integer> addHotPlace(@RequestBody HotPlace hotPlace) {
         log.info("addHotPlace Controller");
         int pk = hotPlaceService.insertHotPlace(hotPlace);
+        // tagtype 의 모든 종류를 1로 초기화
+        // tagType 의 tagName 을 List<String> tagList 로 만듦
+
+        for (TagType tagType : TagType.values()) {
+            hotPlaceService.insertHotPlaceTag(hotPlace.getHotPlaceId(), tagType.getTagName());
+        }
         return success(pk);
     }
     @PostMapping("/article")

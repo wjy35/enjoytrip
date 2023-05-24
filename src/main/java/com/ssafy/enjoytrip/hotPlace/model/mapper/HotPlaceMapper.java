@@ -24,4 +24,6 @@ public interface HotPlaceMapper {
     int updateHotPlaceTag(String hotPlaceId, String tagName);
     int insertHotPlaceTag(String hotPlaceId, String tagName);
     List<HotPlaceTag> selectHotPlaceTagList(String hotPlaceId);
+
+    List<HotPlace> selectHotPlaceByKeyword(String keyword);
 }

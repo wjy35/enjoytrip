@@ -77,4 +77,9 @@ public class HotPlaceServiceImpl implements HotPlaceService {
         return hotPlaceMapper.selectHotPlaceTagList(hotPlaceId);
     }
 
+    @Override
+    public List<HotPlace> selectHotPlaceByKeyword(String keyword) {
+        return hotPlaceMapper.selectHotPlaceByKeyword(keyword);
+    }
+
 }

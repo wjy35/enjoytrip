@@ -96,4 +96,10 @@
         from hot_place_tag
         where hot_place_id = #{hotPlaceId} order by count desc limit 5
     </select>
+
+    <select id="selectHotPlaceByKeyword" resultMap="hotPlace">
+        select *
+        from hot_place
+        where hot_place_name like concat('%', #{keyword}, '%')
+    </select>
 </mapper>

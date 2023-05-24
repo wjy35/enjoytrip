@@ -25,4 +25,6 @@ public interface HotPlaceService {
     public int insertHotPlaceTag(String hotPlaceId, String tagName);
     public void insertHotPlaceTagList(String hotPlaceId, List<String> tagIdList);
     List<HotPlaceTag> selectHotPlaceTagList(String hotPlaceId);
+
+    List<HotPlace> selectHotPlaceByKeyword(String keyword);
 }

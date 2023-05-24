@@ -114,6 +114,6 @@ public class BoardRestController {
         List<FileInfo> list = fileService.selectFile(boardId);
         log.info("list : {}", list);
         return success(list);
-
     }
+
 }
