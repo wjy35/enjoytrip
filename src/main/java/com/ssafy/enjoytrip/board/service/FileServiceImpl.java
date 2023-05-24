@@ -16,13 +16,13 @@ public class FileServiceImpl implements FileService {
     private final S3Service s3Service;
 
     @Override
-    public int insertFile(int boardId, List<MultipartFile> imageFiles) {
+    public int insertFile(int boardId, List<MultipartFile> imageFiles,String folder) {
         // imageFile을 s3Service dml uploadtoS3 함수를 호출하여 url 을 가져온 다음 set 함 그리고 그것을
         // List<fileinfo> 로 변환
         List<FileInfo> list = new ArrayList<>();
         imageFiles.forEach(imageFile -> {
             try {
-                String fileUrl = s3Service.uploadMediaToS3(imageFile);
+                String fileUrl = s3Service.uploadMediaToS3(imageFile, folder);
                 list.add(new FileInfo(0, boardId, fileUrl));
             } catch (Exception e) {
                 e.printStackTrace();

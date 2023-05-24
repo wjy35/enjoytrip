@@ -82,7 +82,7 @@ public class BoardRestController {
         int pk = boardService.regist(boardRequestDto, boardRequestDto.getUserId());
         log.info(pk + "번 게시글에 파일 업로드");
         if (files != null) {
-            fileService.insertFile(pk, files);
+            fileService.insertFile(pk, files,"board/");
         }
         return success(true);
     }
@@ -114,6 +114,6 @@ public class BoardRestController {
         List<FileInfo> list = fileService.selectFile(boardId);
         log.info("list : {}", list);
         return success(list);
-
     }
+
 }
