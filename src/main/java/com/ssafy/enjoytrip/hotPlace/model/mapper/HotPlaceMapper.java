@@ -15,13 +15,12 @@ public interface HotPlaceMapper {
     int insertHotPlace(HotPlace hotPlace);
     int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
     int updateHotPlaceArticleImage(int hotPlaceArticleId, String imageUrl);
-
+    int increaseHitHotPlaceCount(String hotPlaceId);
+    int decreaseHitHotPlaceCount(String hotPlaceId);
     List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
+    // update
+    int updateHotPlaceTag(String hotPlaceId, String tagName);
+    int insertHotPlaceTag(String hotPlaceId, String tagName);
 
-    // Update
-    int updateHotPlace(HotPlace hotPlace);
-    int updateHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
-
-
-    int updateHotPlaceTag(String hotPlaceId, int tagId);
+    List<HotPlaceTag> selectHotPlaceTagList(String hotPlaceId);
 }

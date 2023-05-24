@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class HotPlaceTag {
-    private int hotPlaceTagId;
-    private String hotPlaceId;
     private String tagName;
+    private String hotPlaceId;
     private int count;
 }

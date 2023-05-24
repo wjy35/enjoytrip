@@ -23,9 +23,8 @@
     </resultMap>
 
     <resultMap id="hotPlaceTag" type="com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceTag">
-        <id column="hot_place_tag_id" property="hotPlaceTagId"/>
+        <id column="tag_name" property="tagName"/>
         <result column="hot_place_id" property="hotPlaceId"/>
-        <result column="tag_name" property="tagName"/>
         <result column="count" property="count"/>
     </resultMap>
 
@@ -59,12 +58,17 @@
         where hot_place_article_id = #{hotPlaceArticleId}
     </update>
 
+    <update id="increaseHitHotPlaceCount">
+        update hot_place
+        set vote = vote + 1
+        where hot_place_id = #{hotPlaceId}
+    </update>
 
-    <select id="selectAllHotPlaceTag" resultMap="hotPlaceTag">
-        select *
-        from hot_place_tag
-        where hot_place_id = #{hotPlaceId} order by count desc limit 5
-    </select>
+    <update id="decreaseHitHotPlaceCount">
+        update hot_place
+        set vote = vote - 1
+        where hot_place_id = #{hotPlaceId}
+    </update>
 
     <insert id="insertHotPlace" parameterType="hotPlace" >
         insert into hot_place (hot_place_id, hot_place_name, road_address_name, address_name, place_url, x, y)
@@ -76,4 +80,20 @@
         values (#{userId}, #{hotPlaceId}, #{content}, #{imageUrl}, #{hotPlaceName})
     </insert>
 
+    <update id="updateHotPlaceTag" >
+        update hot_place_tag
+        set count = count + 1
+        where hot_place_id = #{hotPlaceId} and tag_name = #{tagName}
+    </update>
+
+    <insert id="insertHotPlaceTag" >
+        insert into hot_place_tag (hot_place_id, tag_name, count)
+        values (#{hotPlaceId}, #{tagName}, 1)
+    </insert>
+
+    <select id="selectHotPlaceTagList" resultMap="hotPlaceTag">
+        select *
+        from hot_place_tag
+        where hot_place_id = #{hotPlaceId} order by count desc limit 5
+    </select>
 </mapper>

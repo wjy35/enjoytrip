@@ -3,7 +3,6 @@ package com.ssafy.enjoytrip.hotPlace.service;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlace;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceArticle;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceTag;
-import com.ssafy.enjoytrip.hotPlace.model.dto.TagType;
 
 import java.util.List;
 
@@ -19,13 +18,20 @@ public interface HotPlaceService {
 
     int updateHotPlaceArticleImage(int hotPlaceArticleId, String imageUrl);
 
+    int increaseHitHotPlaceCount(String hotPlaceId);
+    int decreaseHitHotPlaceCount(String hotPlaceId);
 
-    /////
-    public List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
-    // update
-    public int updateTag(String hotPlaceId, List<TagType> tagType);
-    // insert
     public int insertHotPlace(HotPlace hotPlace);
     public int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle);
 
+    public int updateHotPlaceTag(String hotPlaceId, String tagId);
+
+    public void updateHotPlaceTagList(String hotPlaceId, List<String> tagIdList);
+    public int insertHotPlaceTag(String hotPlaceId, String tagName);
+    public void insertHotPlaceTagList(String hotPlaceId, List<String> tagIdList);
+    /////
+    public List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
+
+
+    List<HotPlaceTag> selectHotPlaceTagList(String hotPlaceId);
 }

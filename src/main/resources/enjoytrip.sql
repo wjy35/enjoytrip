@@ -134,16 +134,13 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_article` (
 -- Table `enjoytrip`.`hot_place_tag`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_tag` (
-                                                         `hot_place_tag` INT NOT NULL,
-                                                         `hot_place_id` VARCHAR(45) NULL,
-  `tag_name` VARCHAR(45) NULL,
-  `count` INT NULL,
-  PRIMARY KEY (`hot_place_tag`),
+  `hot_place_id` VARCHAR(45) NULL DEFAULT NULL,
+  `tag_name` VARCHAR(45) NOT NULL,
+  `count` INT NULL DEFAULT NULL,
   INDEX `hot_place_id_fk_idx` (`hot_place_id` ASC) VISIBLE,
+  PRIMARY KEY (`tag_name`),
   CONSTRAINT `hot_place_id_fk`
   FOREIGN KEY (`hot_place_id`)
-  REFERENCES `enjoytrip`.`hot_place` (`hot_place_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION)
+  REFERENCES `enjoytrip`.`hot_place` (`hot_place_id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb3;
