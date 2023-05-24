@@ -6,6 +6,7 @@ import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlace;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceArticle;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceTag;
 import com.ssafy.enjoytrip.hotPlace.service.HotPlaceService;
+
 import static com.ssafy.enjoytrip.util.ApiUtil.ApiResult;
 import static com.ssafy.enjoytrip.util.ApiUtil.success;
 
@@ -34,22 +35,16 @@ public class HotPlaceController {
         List<HotPlace> hotPlaces = hotPlaceService.selectAllHotPlace();
         return success(hotPlaces);
     }
-
-    // hot place id 로 article 여러개 가져오기
     @GetMapping("/articleAll/{hotPlaceId}")
     public ApiResult<List<HotPlaceArticle>> getHotPlaceArticleList(@PathVariable String hotPlaceId) {
         List<HotPlaceArticle> hotPlaceArticles = hotPlaceService.selectAllHotPlaceArticle(hotPlaceId);
         return success(hotPlaceArticles);
     }
-
-    // hot place id 로 하나 가져오기 이거는hotplace 가져오는 것임
     @GetMapping("/{hotPlaceId}")
     public ApiResult<HotPlace> getHotPlaceDetail(@PathVariable String hotPlaceId) {
         HotPlace hotPlace = hotPlaceService.selectHotPlaceByHotPlaceId(hotPlaceId);
         return success(hotPlace);
     }
-
-    // article 하나만
     @GetMapping("/article/{hotPlaceArticleId}")
     public ApiResult<HotPlaceArticle> getHotPlaceArticleList(@PathVariable int hotPlaceArticleId) {
         HotPlaceArticle hotPlaceArticle = hotPlaceService.selectHotPlaceArticleByArticleId(hotPlaceArticleId);
@@ -58,53 +53,46 @@ public class HotPlaceController {
 
     // 파일 업로드
     @PostMapping("/article/{articleId}/flleUpload")
-    public ApiResult<Boolean> uploadImagetoArticle(@PathVariable int articleId,@ModelAttribute List<MultipartFile> files) throws IOException {
-        log.info("uploadImagetoArticle Controller",articleId, files);
-        String url = s3Service.uploadMediaToS3( files.get(0), "hotplace/");
+    public ApiResult<Boolean> uploadImagetoArticle(@PathVariable int articleId, @ModelAttribute List<MultipartFile> files) throws IOException {
+        log.info("uploadImagetoArticle Controller", articleId, files);
+        String url = s3Service.uploadMediaToS3(files.get(0), "hotplace/");
         hotPlaceService.updateHotPlaceArticleImage(articleId, url);
         return success(true);
     }
 
-    // 투표
     @PostMapping("/{hotPlaceId}/vote")
     public ApiResult<Boolean> voteHotPlace(@PathVariable String hotPlaceId) {
         hotPlaceService.increaseHitHotPlaceCount(hotPlaceId);
         return success(true);
     }
     @PostMapping("/{hotPlaceId}/unvote")
-    public  ApiResult<Boolean>  unvoteHotPlace(@PathVariable String hotPlaceId) {
+    public ApiResult<Boolean> unvoteHotPlace(@PathVariable String hotPlaceId) {
         hotPlaceService.decreaseHitHotPlaceCount(hotPlaceId);
         return success(true);
     }
 
-    // place 등록 ,  Article 등록
     @PostMapping
     public ApiResult<Integer> addHotPlace(@RequestBody HotPlace hotPlace) {
         log.info("addHotPlace Controller");
         int pk = hotPlaceService.insertHotPlace(hotPlace);
         return success(pk);
     }
-
     @PostMapping("/article")
     public ApiResult<Integer> addHotPlaceArticle(@RequestBody HotPlaceArticle hotPlaceArticle) {
         int pk = hotPlaceService.insertHotPlaceArticle(hotPlaceArticle);
         return success(pk);
     }
 
-
-    // Tag 관련된 속성들
     @PostMapping("/{hotPlaceId}/tag")
     public ApiResult<Boolean> addHotPlaceTag(@PathVariable String hotPlaceId, @RequestBody List<String> tagList) {
         hotPlaceService.insertHotPlaceTagList(hotPlaceId, tagList);
         return success(true);
     }
-
     @PutMapping("/{hotPlaceId}/tag")
     public ApiResult<Boolean> updateHotPlaceTag(@PathVariable String hotPlaceId, @RequestBody List<String> tagList) {
         hotPlaceService.updateHotPlaceTagList(hotPlaceId, tagList);
         return success(true);
     }
-
     @GetMapping("/{hotPlaceId}/tag")
     public ApiResult<List<HotPlaceTag>> getHotPlaceTagList(@PathVariable String hotPlaceId) {
         List<HotPlaceTag> hotPlaceTags = hotPlaceService.selectHotPlaceTagList(hotPlaceId);
