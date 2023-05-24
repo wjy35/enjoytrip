@@ -20,6 +20,7 @@ public class WebMVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        log.info("Interceptor Setting");
         // ToDo: 인증 서비스 URL 추가
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/user/info/*");
@@ -31,7 +32,6 @@ public class WebMVCConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .maxAge(1800);
-
     }
 
 }

@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.ssafy.enjoytrip.board.model.dto.Board;
 import com.ssafy.enjoytrip.board.model.dto.FileInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 import java.util.Optional;
