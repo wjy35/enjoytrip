@@ -107,30 +107,26 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place` (
   PRIMARY KEY (`hot_place_id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb3;
-
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`hot_place_article`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_article` (
                                                              `hot_place_article_id` INT NOT NULL AUTO_INCREMENT,
-                                                             `hot_place_id` VARCHAR(45) NULL,
-  `content` VARCHAR(2000) NULL,
-  `createAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` VARCHAR(45) NULL,
-  `image_url` VARCHAR(1000) NULL,
+                                                             `hot_place_id` VARCHAR(45) NULL DEFAULT NULL,
+  `content` VARCHAR(2000) NULL DEFAULT NULL,
+  `createAt` VARCHAR(1000) NULL DEFAULT NULL,
+  `user_id` VARCHAR(45) NULL DEFAULT NULL,
+  `image_url` VARCHAR(1000) NULL DEFAULT NULL,
+  `hot_place_name` VARCHAR(45) NULL,
   PRIMARY KEY (`hot_place_article_id`),
   INDEX `user_id_fk_hot_place_idx` (`user_id` ASC) VISIBLE,
   INDEX `hot_place_id_fk_article_idx` (`hot_place_id` ASC) VISIBLE,
-  CONSTRAINT `user_id_fk_hot_place`
-  FOREIGN KEY (`user_id`)
-  REFERENCES `enjoytrip`.`user` (`user_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
   CONSTRAINT `hot_place_id_fk_article`
   FOREIGN KEY (`hot_place_id`)
-  REFERENCES `enjoytrip`.`hot_place` (`hot_place_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION)
+  REFERENCES `enjoytrip`.`hot_place` (`hot_place_id`),
+  CONSTRAINT `user_id_fk_hot_place`
+  FOREIGN KEY (`user_id`)
+  REFERENCES `enjoytrip`.`user` (`user_id`))
   ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb3;
 

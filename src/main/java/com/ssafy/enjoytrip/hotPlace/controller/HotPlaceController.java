@@ -17,18 +17,6 @@ import java.util.List;
 @RequestMapping("/hotplace")
 public class HotPlaceController {
     private final HotPlaceService hotPlaceService;
-    @PostMapping
-    public ResponseEntity<?> addHotPlace(@RequestBody HotPlace hotPlace) {
-        log.info("addHotPlace Controller");
-        hotPlaceService.insertHotPlace(hotPlace);
-        return ResponseEntity.ok().body("success");
-    }
-
-    @PostMapping("/article")
-    public ResponseEntity<?> addHotPlaceArticle(@RequestBody HotPlaceArticle hotPlaceArticle) {
-        hotPlaceService.insertHotPlaceArticle(hotPlaceArticle);
-        return ResponseEntity.ok().body("success");
-    }
 
     @GetMapping
     public ResponseEntity<List<HotPlace>> getHotPlaceList() {
@@ -54,6 +42,10 @@ public class HotPlaceController {
         return ResponseEntity.ok().body(hotPlaceArticle);
     }
 
+    @GetMapping("/{hotPlaceId}/tag")
+    public void getHotPlaceTagList() {
+
+    }
 
     @PostMapping("/{hotPlaceId}/vote")
     public void voteHotPlace() {
@@ -66,14 +58,23 @@ public class HotPlaceController {
     }
 
 
-    @GetMapping("/{hotPlaceId}/tag")
-    public void getHotPlaceTagList() {
-
-    }
 
     @PostMapping("/{hotPlaceId}/tag")
     public void addHotPlaceTag() {
 
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addHotPlace(@RequestBody HotPlace hotPlace) {
+        log.info("addHotPlace Controller");
+        hotPlaceService.insertHotPlace(hotPlace);
+        return ResponseEntity.ok().body("success");
+    }
+
+    @PostMapping("/article")
+    public ResponseEntity<?> addHotPlaceArticle(@RequestBody HotPlaceArticle hotPlaceArticle) {
+        hotPlaceService.insertHotPlaceArticle(hotPlaceArticle);
+        return ResponseEntity.ok().body("success");
     }
 
 }
