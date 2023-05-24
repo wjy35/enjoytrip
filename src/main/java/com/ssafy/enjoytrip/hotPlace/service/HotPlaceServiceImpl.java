@@ -1,4 +1,5 @@
 package com.ssafy.enjoytrip.hotPlace.service;
+
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlace;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceArticle;
 import com.ssafy.enjoytrip.hotPlace.model.dto.HotPlaceTag;
@@ -12,13 +13,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class HotPlaceServiceImpl implements HotPlaceService{
+public class HotPlaceServiceImpl implements HotPlaceService {
     private final HotPlaceMapper hotPlaceMapper;
-
-    @Override
-    public HotPlace selectHotPlaceById(String hotPlaceId) {
-        return hotPlaceMapper.selectHotPlaceByHotPlaceId(hotPlaceId);
-    }
 
     @Override
     public List<HotPlace> selectAllHotPlace() {
@@ -31,32 +27,30 @@ public class HotPlaceServiceImpl implements HotPlaceService{
     }
 
     @Override
-    public HotPlaceArticle selectHotPlaceArticleByUserIdAndHotPlaceId(String userId, String hotPlaceId) {
-        return hotPlaceMapper.selectHotPlaceArticleByUserIdAndHotPlaceId(userId, hotPlaceId);
+    public HotPlace selectHotPlaceByHotPlaceId(String hotPlaceId) {
+        return hotPlaceMapper.selectHotPlaceByHotPlaceId(hotPlaceId);
     }
 
+    @Override
+    public HotPlaceArticle selectHotPlaceArticleByArticleId(int hotPlaceArticleId) {
+        return hotPlaceMapper.selectHotPlaceArticleByArticleId(hotPlaceArticleId);
+    }
+
+
+    //////
     @Override
     public List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId) {
         return hotPlaceMapper.selectAllHotPlaceTag(hotPlaceId);
     }
 
     @Override
-    public List<HotPlaceArticle> selectHotPlaceArticleById(String hotPlaceId) {
-        return hotPlaceMapper.selectHotPlaceArticleById(hotPlaceId);
-    }
-
-
-
-    @Override
     public int updateTag(String hotPlaceId, List<TagType> tagType) {
-        for (int i = 0 ; i< tagType.size(); i++) {
+        for (int i = 0; i < tagType.size(); i++) {
             hotPlaceMapper.updateHotPlaceTag(hotPlaceId, tagType.get(i).getId());
         }
         return 0;
     }
 
-
-    // insert
     @Override
     public int insertHotPlace(HotPlace hotPlace) {
         return hotPlaceMapper.insertHotPlace(hotPlace);
@@ -64,9 +58,9 @@ public class HotPlaceServiceImpl implements HotPlaceService{
 
     @Override
     public int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle) {
-        return hotPlaceMapper.insertHotPlaceArticle(hotPlaceArticle);
+        hotPlaceMapper.insertHotPlaceArticle(hotPlaceArticle);
+        return hotPlaceArticle.getHotPlaceArticleId();
     }
-
 
 
 }

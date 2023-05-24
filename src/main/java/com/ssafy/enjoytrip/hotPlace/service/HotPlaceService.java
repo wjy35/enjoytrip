@@ -9,19 +9,20 @@ import java.util.List;
 
 public interface HotPlaceService {
 
-    // select implmentation
-    public HotPlace selectHotPlaceById(String hotPlaceId) ;
+    // select
     public List<HotPlace> selectAllHotPlace();
-    public List<HotPlaceArticle> selectHotPlaceArticleById(String hotPlaceId);
-
     public List<HotPlaceArticle> selectAllHotPlaceArticle(String hotPlaceId);
-    public HotPlaceArticle selectHotPlaceArticleByUserIdAndHotPlaceId(String userId, String hotPlaceId);
-    public List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
 
+    public HotPlace selectHotPlaceByHotPlaceId(String hotPlaceId) ;
+
+    public HotPlaceArticle selectHotPlaceArticleByArticleId(int hotPlaceId);
+
+
+
+    /////
+    public List<HotPlaceTag> selectAllHotPlaceTag(String hotPlaceId);
     // update
     public int updateTag(String hotPlaceId, List<TagType> tagType);
-
-
     // insert
     public int insertHotPlace(HotPlace hotPlace);
     public int insertHotPlaceArticle(HotPlaceArticle hotPlaceArticle);

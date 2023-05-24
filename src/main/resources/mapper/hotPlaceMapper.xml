@@ -40,11 +40,20 @@
         where hot_place_id = #{hotPlaceId}
     </select>
 
-    <select id="selectHotPlaceArticleByUserIdAndHotPlaceId" resultMap="hotPlaceArticle">
+    <select id="selectHotPlaceByHotPlaceId" resultMap="hotPlace">
+        select *
+        from hot_place
+        where hot_place_id = #{hotPlaceId}
+    </select>
+
+
+    <select id="selectHotPlaceArticleByArticleId" resultMap="hotPlaceArticle">
         select *
         from hot_place_article
-        where user_id = #{userId} and hot_place_id = #{hotPlaceId}
+        where hot_place_article_id = #{hotPlaceArticleId}
     </select>
+
+
 
     <select id="selectAllHotPlaceTag" resultMap="hotPlaceTag">
         select *
@@ -52,27 +61,14 @@
         where hot_place_id = #{hotPlaceId} order by count desc limit 5
     </select>
 
-    <select id="selectHotPlaceByHotPlaceId" resultMap="hotPlace">
-        select *
-        from hot_place
-        where hot_place_id = #{hotPlaceId}
-    </select>
-
-    <select id="selectHotPlaceArticleById" resultMap="hotPlaceArticle">
-        select *
-        from hot_place_article
-        where hot_place_id = #{hotPlaceId}
-    </select>
-
-
     <insert id="insertHotPlace" parameterType="hotPlace" >
         insert into hot_place (hot_place_id, hot_place_name, road_address_name, address_name, place_url, x, y)
         values (#{hotPlaceId},#{hotPlaceName}, #{roadAddressName}, #{addressName}, #{placeUrl}, #{x}, #{y})
     </insert>
 
     <insert id="insertHotPlaceArticle" parameterType="hotPlaceArticle" useGeneratedKeys="true" keyProperty="hotPlaceArticleId">
-        insert into hot_place_article (user_id, hot_place_id, content, image_url)
-        values (#{userId}, #{hotPlaceId}, #{content}, #{imageUrl})
+        insert into hot_place_article (user_id, hot_place_id, content, image_url, hot_place_name)
+        values (#{userId}, #{hotPlaceId}, #{content}, #{imageUrl}, #{hotPlaceName})
     </insert>
 
 </mapper>

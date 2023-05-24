@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_article` (
                                                              `hot_place_article_id` INT NOT NULL AUTO_INCREMENT,
                                                              `hot_place_id` VARCHAR(45) NULL DEFAULT NULL,
   `content` VARCHAR(2000) NULL DEFAULT NULL,
-  `createAt` VARCHAR(1000) NULL DEFAULT NULL,
+  `createAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` VARCHAR(45) NULL DEFAULT NULL,
   `image_url` VARCHAR(1000) NULL DEFAULT NULL,
   `hot_place_name` VARCHAR(45) NULL,

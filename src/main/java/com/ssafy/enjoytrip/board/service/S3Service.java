@@ -26,7 +26,7 @@ public class S3Service {
     private String bucket;
 
     @Transactional
-    public String uploadMediaToS3(MultipartFile file) throws IOException {
+    public String uploadMediaToS3(MultipartFile file, String folder) throws IOException {
         String fileName = file.getOriginalFilename();
         log.info("File name: " + fileName);
 
@@ -36,7 +36,7 @@ public class S3Service {
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
         amazonS3.putObject(
-                new PutObjectRequest(bucket, fileName, file.getInputStream(),
+                new PutObjectRequest(bucket, folder+ fileName, file.getInputStream(),
                         metadata).withCannedAcl(
                         CannedAccessControlList.PublicRead));
         return amazonS3.getUrl(bucket, fileName).toString();

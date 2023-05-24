@@ -12,5 +12,6 @@ public class HotPlaceArticle {
     private String hotPlaceId;
     private String content;
     private String createAt;
+    private String hotPlaceName;
     private String imageUrl;
 }

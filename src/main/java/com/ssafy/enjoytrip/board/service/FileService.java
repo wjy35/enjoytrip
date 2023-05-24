@@ -7,6 +7,6 @@ import java.util.List;
 
 
 public interface FileService {
-    int insertFile (int boardId, List<MultipartFile> imageFiles);
+    int insertFile (int boardId, List<MultipartFile> imageFiles,String folder);
     List<FileInfo> selectFile(int boardId);
 }
