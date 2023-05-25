@@ -108,8 +108,9 @@ public class HotPlaceController {
         hotPlaceService.updateHotPlaceTagList(hotPlaceId, tagList);
         return success(true);
     }
+
     @GetMapping("/{hotPlaceId}/tag")
-    public ApiResult<List<HotPlaceTag>> getHotPlaceTagList(@PathVariable String hotPlaceId) {
+    public ApiResult<List<HotPlaceTag>> getHotPlaceTtagList(@PathVariable String hotPlaceId) {
         List<HotPlaceTag> hotPlaceTags = hotPlaceService.selectHotPlaceTagList(hotPlaceId);
         return success(hotPlaceTags);
     }

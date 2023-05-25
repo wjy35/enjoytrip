@@ -134,11 +134,11 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_article` (
 -- Table `enjoytrip`.`hot_place_tag`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`hot_place_tag` (
-  `hot_place_id` VARCHAR(45) NULL DEFAULT NULL,
+  `hot_place_id` VARCHAR(45) NOT NULL,
   `tag_name` VARCHAR(45) NOT NULL,
   `count` INT NULL DEFAULT NULL,
+  PRIMARY KEY (`tag_name`, `hot_place_id`),
   INDEX `hot_place_id_fk_idx` (`hot_place_id` ASC) VISIBLE,
-  PRIMARY KEY (`tag_name`),
   CONSTRAINT `hot_place_id_fk`
   FOREIGN KEY (`hot_place_id`)
   REFERENCES `enjoytrip`.`hot_place` (`hot_place_id`))
