@@ -36,6 +36,7 @@ public class PageNavigationForPageHelper {
 
     public String makePageNavigation() {
         StringBuilder str = new StringBuilder();
+
         str.append("<ul class='pagination  justify-content-center'>");
         str.append(String.format("<li class='page-item'><a href='%s=%d' class='page-link'>최신</a></li>", path, 1));
         str.append(String.format("<li class='page-item'><a href='%s=%d' class='page-link'>이전</a></li>", path, startRange ? 1 : startPage - 1));
