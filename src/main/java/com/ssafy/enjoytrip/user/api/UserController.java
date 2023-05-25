@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://127.0.0.1:8080","http://192.168.0.1:8080","http://localhost:8080"})
+@CrossOrigin(origins = {"http://127.0.0.1:8080","http://192.168.0.1:8080","http://localhost:8080","http://localhost:8081"})
 @Slf4j
 public class UserController {
 
@@ -28,6 +29,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> login(@RequestBody User requestUser){
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
+
         try {
             User loginUser = userService.login(requestUser.getUserId(),requestUser.getPassword());
             if (loginUser != null) {
@@ -50,7 +52,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> join(@RequestBody User requestUser){
-        System.out.println(requestUser);
         Map<String, Object> resultMap = new HashMap<>();
 
         int result = userService.join(requestUser);
@@ -102,13 +103,16 @@ public class UserController {
         HttpStatus status = HttpStatus.ACCEPTED;
 
         String token = request.getHeader("refresh-token");
+
         if (jwtService.checkValidToken(token)) {
             if (jwtService.canRefresh(token,user.getUserId())) {
+
                 String accessToken = jwtService.generateAccessToken(user.getUserId());
 
                 resultMap.put("access-token", accessToken);
-
                 status = HttpStatus.ACCEPTED;
+            }else{
+                status = HttpStatus.UNAUTHORIZED;
             }
         } else {
             status = HttpStatus.UNAUTHORIZED;
@@ -117,7 +121,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> logout(@PathVariable String userId){
+    public ResponseEntity<?> logout(@PathVariable String userId,HttpServletRequest request){
         Map<String, Object> resultMap = new HashMap<>();
 
         HttpStatus status = HttpStatus.ACCEPTED;
@@ -129,6 +133,24 @@ public class UserController {
         } catch (Exception e) {
             resultMap.put("success", false);
             status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @GetMapping("/info/{userId}")
+    public ResponseEntity<?> getInfo(@PathVariable String userId){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        HttpStatus status = HttpStatus.ACCEPTED;
+
+        User user = userService.getInformation(userId);
+
+        if(Objects.nonNull(user)){
+            resultMap.put("success",true);
+            resultMap.put("userInfo",user);
+        }else{
+            resultMap.put("success",false);
         }
 
         return new ResponseEntity<>(resultMap, status);
