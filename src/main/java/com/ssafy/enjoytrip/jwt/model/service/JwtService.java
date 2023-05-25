@@ -5,6 +5,7 @@ import com.ssafy.enjoytrip.jwt.model.dto.RefreshTokenDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class JwtService {
 
@@ -59,10 +61,12 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS256, SALT.getBytes())
                 .compact();
 
+        log.info("JWT Generate Token - {}",jwt);
         return jwt;
     }
 
     public boolean checkValidToken(final String token){
+        log.info("JWT Check Valid Token - {}",token);
         try{
             Jwts.parser().setSigningKey(SALT.getBytes()).parseClaimsJws(token);
         }catch (Exception e){

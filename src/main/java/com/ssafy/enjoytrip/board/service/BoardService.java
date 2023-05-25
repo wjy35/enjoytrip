@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.board.service;
 import com.github.pagehelper.Page;
 import com.ssafy.enjoytrip.board.model.dto.Board;
 import com.ssafy.enjoytrip.board.model.dto.BoardRequestDto;
+import com.ssafy.enjoytrip.board.model.dto.SearchDto;
 
 
 public interface BoardService {
@@ -17,4 +18,6 @@ public interface BoardService {
     int updateHit(int boardId);
 
     Page<Board> getBoardList();
+
+    Page<Board> getBoardListBySearchDto(SearchDto searchDto);
 }

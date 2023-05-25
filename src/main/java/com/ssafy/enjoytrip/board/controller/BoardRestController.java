@@ -66,6 +66,24 @@ public class BoardRestController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+
+    @GetMapping("/list/search")
+    public ResponseEntity<Map<String, Object>> getListBySearchDto(PageInfoDto pageInfoDto,@ModelAttribute SearchDto searchDto, HttpServletRequest request) {
+        log.info("searchDto : {}", searchDto);
+        Map<String, Object> map = new HashMap<>();
+        if (pageInfoDto.getPage() == 0) {
+            pageInfoDto = new PageInfoDto(1, 10);
+        }
+        PageHelper.startPage(pageInfoDto.getPage(), pageInfoDto.getPageSize());
+        Page<Board> boards = boardService.getBoardListBySearchDto(searchDto);
+        String path = request.getContextPath() + "/board/list/search?page";
+        PageNavigationForPageHelper helper = new PageNavigationForPageHelper(boards, path);
+        map.put("boards", helper);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+
+
     @GetMapping("/{boardId}")
     public ApiResult<BoardResponseDto> getBoard(@PathVariable("boardId") int boardId) {
         System.out.println("getBoard");
@@ -82,7 +100,7 @@ public class BoardRestController {
         int pk = boardService.regist(boardRequestDto, boardRequestDto.getUserId());
         log.info(pk + "번 게시글에 파일 업로드");
         if (files != null) {
-            fileService.insertFile(pk, files);
+            fileService.insertFile(pk, files,"board/");
         }
         return success(true);
     }
@@ -114,6 +132,6 @@ public class BoardRestController {
         List<FileInfo> list = fileService.selectFile(boardId);
         log.info("list : {}", list);
         return success(list);
-
     }
+
 }
