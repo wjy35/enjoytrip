@@ -2,7 +2,6 @@ package com.ssafy.enjoytrip.plan;
 
 import com.ssafy.enjoytrip.plan.model.dto.Plan;
 import com.ssafy.enjoytrip.plan.model.dto.PlanBoardDto;
-import com.ssafy.enjoytrip.plan.model.dto.PlanBoardResponse;
 import com.ssafy.enjoytrip.plan.model.dto.PlanDto;
 import com.ssafy.enjoytrip.plan.model.mapper.PlanMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,47 +83,47 @@ public class PlanMapperTest {
         int planBoardId = 1;
 
         // when
-        List<PlanDto> planDtoList = planMapper.selectPlanByPlanBoardId(planBoardId);
+        List<Plan> planList = planMapper.selectPlanByPlanBoardId(planBoardId);
 
         // then
-        System.out.println("planDtoList = " + planDtoList);
-        assertEquals(planDtoList.size(),4);
-        for(int i=0; i<planDtoList.size(); i++){
-           assertEquals(planDtoList.get(i).getPlanBoardId(),planBoardId);
+        System.out.println("planList = " + planList);
+        assertEquals(planList.size(),4);
+        for(int i=0; i<planList.size(); i++){
+           assertEquals(planList.get(i).getPlanBoardId(),planBoardId);
         }
     }
 
     @Test
     @Transactional
-    void testInserPlanDto(){
+    void testInsertPlanDto(){
         // given
-        int planBoardId = 1;
+        int planBoardId = 2;
         int insertSize = 3;
         int beforeSize = planMapper.selectPlanByPlanBoardId(planBoardId).size();
-        List<PlanDto> insertPlanDtoList = makePlanDtoList(insertSize,planBoardId);
-        System.out.println("insertPlanDtoList = " + insertPlanDtoList);
+        List<Plan> insertPlanList = makePlanDtoList(insertSize,planBoardId);
+        System.out.println("insertPlanList = " + insertPlanList);
 
         // when
-        int result = planMapper.insertPlanDtoList(insertPlanDtoList);
+        int result = planMapper.insertPlanList(insertPlanList);
 
         // then
-        List<PlanDto> selectPlanDtoList = planMapper.selectPlanByPlanBoardId(planBoardId);
-        System.out.println("selectPlanDtoList = " + selectPlanDtoList);
+        List<Plan> selectPlanList = planMapper.selectPlanByPlanBoardId(planBoardId);
+        System.out.println("selectPlanList = " + selectPlanList);
         System.out.println(result);
         assertEquals(result,insertSize);
-        assertEquals(insertSize+beforeSize,selectPlanDtoList.size());
+        assertEquals(insertSize+beforeSize,selectPlanList.size());
     }
 
 
-    List<PlanDto> makePlanDtoList(int size,int planBoardId){
-        List<PlanDto> planDtoList = new ArrayList<>();
+    List<Plan> makePlanDtoList(int size,int planBoardId){
+        List<Plan> planDtoList = new ArrayList<>();
         for(int i=0; i<size; i++){
             planDtoList.add(makePlanDto(i,planBoardId));
         }
         return planDtoList;
     }
-    PlanDto makePlanDto(int order,int planBoardId){
-        return PlanDto.builder()
+    Plan makePlanDto(int order,int planBoardId){
+        return Plan.builder()
                 .planBoardId(planBoardId)
                 .place("test")
                 .order(order)

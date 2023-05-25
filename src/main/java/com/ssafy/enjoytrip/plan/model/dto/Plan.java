@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 
+import java.sql.Date;
 import java.sql.Time;
 
 @Data
@@ -13,10 +14,12 @@ import java.sql.Time;
 @Builder
 public class Plan {
     private int planId;
+    private int planBoardId;
     private String place;
     private String content;
     private int order;
     private int duration;
+    private Date date;
     private Time startTime;
     private Time endTime;
 }

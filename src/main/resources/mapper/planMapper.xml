@@ -22,7 +22,7 @@
 		select * from plan_board where plan_board_id = #{planBoardId}
 	</select>
 
-	<select id="selectPlanByPlanBoardId" parameterType="int" resultType="planDto">
+	<select id="selectPlanByPlanBoardId" parameterType="int" resultType="plan">
 		select * from plan where plan_board_id = #{planBoardId} order by `order`;
 	</select>
 
@@ -30,10 +30,10 @@
 		<selectKey resultType="int" keyProperty="planBoardId" order="AFTER">
 			select MAX(plan_board_id) from plan_board
 		</selectKey>
-		insert into plan_board(title, user_id, start_date, end_date) value (#{userId},#{title},#{startDate},#{endDate})
+		insert into plan_board(title, user_id, start_date, end_date) value (#{title},#{userId},#{startDate},#{endDate})
 	</insert>
 
-	<insert id="insertPlanDtoList" parameterType="java.util.List">
+	<insert id="insertPlanList" parameterType="java.util.List">
 		insert into plan(plan_board_id, place, `order`, duration,date, start_time, end_time)
 		values
 		<foreach collection="list" item="item" separator=",">

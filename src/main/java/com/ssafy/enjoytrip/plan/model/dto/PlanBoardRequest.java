@@ -1,11 +1,10 @@
 package com.ssafy.enjoytrip.plan.model.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
-
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import java.util.Map;
 @ToString
 @AllArgsConstructor
 @Builder
-public class PlanBoardResponse {
+public class PlanBoardRequest {
     private int planBoardId;
     private String userId;
     private String title;
