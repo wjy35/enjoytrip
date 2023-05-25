@@ -3,6 +3,7 @@ package com.ssafy.enjoytrip.board.service;
 import com.github.pagehelper.Page;
 import com.ssafy.enjoytrip.board.model.dto.Board;
 import com.ssafy.enjoytrip.board.model.dto.BoardRequestDto;
+import com.ssafy.enjoytrip.board.model.dto.SearchDto;
 import com.ssafy.enjoytrip.board.model.mapper.BoardMapper;
 import com.ssafy.enjoytrip.error.BoardNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -56,4 +57,11 @@ public class BoardServiceImpl implements BoardService {
     public Page<Board> getBoardList() {
         return boardMapper.selectAll();
     }
+
+    @Override
+    public Page<Board> getBoardListBySearchDto(SearchDto searchDto) {
+        return boardMapper.selectBoardListBySearchDto(searchDto);
+    }
+
+
 }
