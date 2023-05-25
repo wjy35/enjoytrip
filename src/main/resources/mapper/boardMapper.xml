@@ -53,8 +53,9 @@
 
     <select id="selectAll" resultMap="board">
         select *
-        from board
+        from board order by current_update desc
     </select>
+
 
 
     <resultMap type="com.ssafy.enjoytrip.board.model.dto.FileInfo" id="fileInfo">
@@ -66,5 +67,19 @@
         select *
         from file_info
         where board_id = #{boardId}
+    </select>
+
+    <select id="selectBoardListBySearchDto" resultMap="board">
+        select *
+        from board
+        <trim prefix="where" prefixOverrides="and|or ">
+            <if test="keyword != null">
+                and (subject like concat('%', #{keyword}, '%') or content like concat('%', #{keyword}, '%'))
+            </if>
+            <if test="category != null">
+                and type = #{category}
+            </if>
+        </trim>
+        order by current_update desc
     </select>
 </mapper>

@@ -66,6 +66,24 @@ public class BoardRestController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+
+    @GetMapping("/list/search")
+    public ResponseEntity<Map<String, Object>> getListBySearchDto(PageInfoDto pageInfoDto,@ModelAttribute SearchDto searchDto, HttpServletRequest request) {
+        log.info("searchDto : {}", searchDto);
+        Map<String, Object> map = new HashMap<>();
+        if (pageInfoDto.getPage() == 0) {
+            pageInfoDto = new PageInfoDto(1, 10);
+        }
+        PageHelper.startPage(pageInfoDto.getPage(), pageInfoDto.getPageSize());
+        Page<Board> boards = boardService.getBoardListBySearchDto(searchDto);
+        String path = request.getContextPath() + "/board/list/search?page";
+        PageNavigationForPageHelper helper = new PageNavigationForPageHelper(boards, path);
+        map.put("boards", helper);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+
+
     @GetMapping("/{boardId}")
     public ApiResult<BoardResponseDto> getBoard(@PathVariable("boardId") int boardId) {
         System.out.println("getBoard");
